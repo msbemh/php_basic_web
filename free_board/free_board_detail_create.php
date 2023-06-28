@@ -19,7 +19,8 @@
                 imageUploadUrl: 'image-upload.php',
                 imageMultipleFile: true,
                 videoFileInput: true,
-                videoUploadUrl: 'image-upload.php',
+                videoUploadUrl: 'vedio_upload.php',
+                videoMultipleFile: true,
                 buttonList: [
                     ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
                     ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
@@ -30,6 +31,44 @@
                 lang: SUNEDITOR_LANG['ko']
             });
 
+            // editor.onImageUploadBefore = function (files, info, core, uploadHandler) {
+            //     files.forEach(file => {
+            //         console.log('[test]file:', file);
+            //         const reader = new FileReader();
+            //         reader.onload = ({ target }) => {
+            //             console.log('[test]target:', target);
+            //             const html = `<div class="se-component se-image-container __se__float-none">
+            //                             <figure>
+            //                                 <img src="${target.result}" 
+            //                                 alt="" 
+            //                                 data-rotate="" 
+            //                                 data-proportion="true" 
+            //                                 data-rotatex="" 
+            //                                 data-rotatey="" 
+            //                                 data-size="," 
+            //                                 data-align="none" 
+            //                                 data-percentage="auto,auto" 
+            //                                 data-index="0" 
+            //                                 data-file-name="${reader.name}" 
+            //                                 data-file-size="${reader.size}" 
+            //                                 data-origin="," 
+            //                                 style="">
+            //                             </figure>
+            //                             </div>
+            //                             `;
+            //             editor.insertHTML(html, true, true);
+            //         };
+            //         reader.readAsDataURL(file);
+            //     });
+
+            //     return false;
+            // }
+
+            // editor.onImageUpload = function (targetElement, index, state, info, remainingFilesCount, core) {
+            //     console.log(`targetElement:${targetElement}, index:${index}, state('create', 'update', 'delete'):${state}`)
+            //     console.log(`info:${info}, remainingFilesCount:${remainingFilesCount}`)
+            // }
+
             $('#cancle_btn').on('click', function () {
                 window.history.back();
             });
@@ -37,7 +76,7 @@
             $('#save_btn').on('click', function () {
                 const title = document.querySelector('#title').value;
                 const content = editor.getContents();
-                const file_paths = [];
+                const file_path_infos = [];
 
                 /**
                  * suneditor에 추가한 image file 경로 추가
@@ -45,7 +84,22 @@
                 const suneditor_img_infos = editor.getImagesInfo();
                 suneditor_img_infos.forEach(info => {
                     const pathname = new URL(info.src).pathname;
-                    file_paths.push(pathname);
+                    file_path_infos.push({
+                        path: pathname,
+                        type: 'img'
+                    });
+                });
+
+                /**
+                 * suneditor에 추가한 video file 경로 추가
+                 */
+                const suneditor_video_infos = editor.getFilesInfo('video');
+                suneditor_video_infos.forEach(info => {
+                    const pathname = new URL(info.src).pathname;
+                    file_path_infos.push({
+                        path: pathname,
+                        type: 'video'
+                    });
                 });
 
                 $.ajax({
@@ -54,12 +108,12 @@
                     data: {
                         title,
                         content,
-                        file_paths
+                        file_path_infos
                     },
                     dataType: 'json',
                     success: function (data) {
                         const result = data.result;
-                        if(result){
+                        if (result) {
                             const id = data.id;
                             window.location.href = `free_board_detail_read.php?id=${id}`;
                         }

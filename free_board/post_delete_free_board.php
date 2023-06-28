@@ -12,13 +12,12 @@ try {
     // POST 파라미터 가져오기
     $id = $_POST["id"];
 
-    $base_dir = '/usr/local/apache2/htdocs';
-
     /**
      * file 테이블에서 해당 게시글과 관련된 이미지 파일들을 모두 삭제시키자
      */
     $sql = "SELECT
-            path
+            path,
+            type
         FROM free_board_file_tb 
         WHERE free_board_id = $id ";
 
@@ -30,8 +29,9 @@ try {
      * MYSQLI_BOTH : 키와 숫자 둘다 있는 배열로 반환
      */
     while ($r = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
-       $file_path = $base_dir . $r['path'];
-       unlink("$file_path");
+        $file_path = '..' . $r['path'];
+        $file_path = urldecode($file_path);
+        unlink("$file_path");
     }
 
     $sql = "DELETE FROM free_board_tb

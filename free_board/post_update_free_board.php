@@ -13,11 +13,11 @@ try {
     $id = $_POST["id"];
     $title = $_POST["title"];
     $content = $_POST["content"];
-    $file_paths = $_POST["file_paths"];
+    $file_path_infos = $_POST["file_path_infos"];
     // 이걸로 기존에 있던 path와 새롭게 들어온 path를 구별하여, 새롭게 들어온 path만 DB에 경로 추가해준다.
-    $file_paths_copy = [];
-    if(!empty($file_paths) && count($file_paths) > 0){
-        $file_paths_copy = array_replace([], $file_paths);
+    $file_path_infos_copy = [];
+    if (!empty($file_path_infos) && count($file_path_infos) > 0) {
+        $file_path_infos_copy = array_replace([], $file_path_infos);
     }
 
     $sql = "UPDATE free_board_tb SET 
@@ -36,16 +36,11 @@ try {
     }
 
     /**
-     * DB에 있는 파일 경로중 file_paths에 없는 경로의 경우
-     * 실제 파일을 삭제시키고, DB도 삭제시키자
-     */
-    $base_dir = '/usr/local/apache2/htdocs';
-
-    /**
      * file 테이블에서 해당 게시글과 관련된 이미지 파일들을 모두 삭제시키자
      */
     $sql = "SELECT
-            path
+            path,
+            type
         FROM free_board_file_tb 
         WHERE free_board_id = $id ";
 
@@ -57,17 +52,30 @@ try {
      * MYSQLI_BOTH : 키와 숫자 둘다 있는 배열로 반환
      */
     while ($r = mysqli_fetch_array($result, MYSQLI_ASSOC)) {
+        $db_file_type = $r['type'];
+
+        /**
+         * DB에 있는 파일 경로중 file_path_infos에 없는 경로의 경우
+         * 실제 파일을 삭제시키고, DB도 삭제시키자
+         */
+        $base_dir = '';
+
         // db에 저장된 이미지 경로
         $db_file_path = $r['path'];
-        $file_full_path = $base_dir . $r['path'];
+        $file_full_path = '..' . $r['path'];
 
         // db에는 이미지 경로가 존재하지만, 파라미터로 넘겨받은 이미지 경로에는 없다면 삭제 시킨다.
         $is_exist = FALSE;
-        foreach ($file_paths as $file_path) {
+        foreach ($file_path_infos as $file_info) {
+            $file_path = $file_info['path'];
+            $file_path = urldecode($file_path);
             if ($db_file_path == $file_path) {
                 $is_exist = TRUE;
                 // 밑에서 남은 file_path들은 새롭게 추가하기 위해서
-                $file_paths_copy = array_diff($file_paths_copy, array($file_path));
+                $key = array_search($file_info, $file_path_infos_copy);
+                if ($key !== false) {
+                    unset($file_path_infos_copy[$key]);
+                }
             }
         }
 
@@ -90,8 +98,10 @@ try {
 
     // 새로운 파일경로의 경우 DB에 추가
     // 추가한 파일이 있을 경우 DB에 경로 추가
-    if (count($file_paths_copy) > 0) {
-        foreach ($file_paths_copy as $file_path) {
+    if (count($file_path_infos_copy) > 0) {
+        foreach ($file_path_infos_copy as $file_info) {
+            $file_path = $file_info['path'];
+            $file_path = urldecode($file_path);
             $sql = "INSERT INTO free_board_file_tb(
                     free_board_id, 
                     path, 

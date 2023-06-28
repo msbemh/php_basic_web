@@ -32,6 +32,9 @@
                 // plugins: [font, video, image, list],
                 imageUploadUrl: 'image-upload.php',
                 imageMultipleFile: true,
+                videoFileInput: true,
+                videoUploadUrl: 'vedio_upload.php',
+                videoMultipleFile: true,
                 buttonList: [
                     ['undo', 'redo', 'font', 'fontSize', 'formatBlock'],
                     ['bold', 'underline', 'italic', 'strike', 'subscript', 'superscript', 'removeFormat'],
@@ -49,7 +52,7 @@
             $('#save_btn').on('click', function () {
                 const title = document.querySelector('#title').value;
                 const content = editor.getContents();
-                const file_paths = [];
+                const file_path_infos = [];
 
                 /**
                  * suneditor에 추가한 image file 경로 추가
@@ -57,7 +60,22 @@
                 const suneditor_img_infos = editor.getImagesInfo();
                 suneditor_img_infos.forEach(info => {
                     const pathname = new URL(info.src).pathname;
-                    file_paths.push(pathname);
+                    file_path_infos.push({
+                        path : pathname,
+                        type : 'img'
+                    });
+                });
+
+                /**
+                 * suneditor에 추가한 video file 경로 추가
+                 */
+                const suneditor_video_infos = editor.getFilesInfo('video');
+                suneditor_video_infos.forEach(info => {
+                    const pathname = new URL(info.src).pathname;
+                    file_path_infos.push({
+                        path : pathname,
+                        type : 'video'
+                    });
                 });
 
                 $.ajax({
@@ -67,7 +85,7 @@
                         id,
                         title,
                         content,
-                        file_paths
+                        file_path_infos
                     },
                     dataType: 'json',
                     success: function (data) {

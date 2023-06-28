@@ -12,7 +12,7 @@ try {
     // POST 파라미터 가져오기
     $title = $_POST["title"];
     $content = $_POST["content"];
-    $file_paths = $_POST["file_paths"];
+    $file_path_infos = $_POST["file_path_infos"];
 
     // 추가된 데이터의 id
     $insert_id;
@@ -39,16 +39,21 @@ try {
     }
 
     // 추가한 파일이 있을 경우 DB에 경로 추가
-    if (count($file_paths) > 0) {
-        foreach ($file_paths as $file_path) {
+    if (!empty($file_path_infos) && count($file_path_infos) > 0) {
+        foreach ($file_path_infos as $file_path_info) {
+            $file_path = $file_path_info['path'];
+            $file_path = urldecode($file_path);
+            $type = $file_path_info['type'];
+
             $sql = "INSERT INTO free_board_file_tb(
                     free_board_id, 
                     path, 
+                    type,
                     create_user, 
                     create_date, 
                     update_user, 
                     update_date)
-                VALUES ('$insert_id', '$file_path', 'admin', now(), 'admin', now())";
+                VALUES ('$insert_id', '$file_path', '$type', 'admin', now(), 'admin', now())";
 
             // free_board_file_tb 데이터 추가
             if ($conn->query($sql) === TRUE) {

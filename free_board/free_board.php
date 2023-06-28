@@ -3,6 +3,7 @@
 
 <head>
     <?php require '../head.php'; ?>
+    <?php require '../user/session.php'; ?>
     <script>
         /**
          * 게시판 페이징 및 검색 변수들

@@ -3,7 +3,6 @@
 
 <head>
     <?php require '../head.php'; ?>
-    <?php require '../user/session.php'; ?>
     <script>
         /**
          * 게시판 페이징 및 검색 변수들
@@ -26,7 +25,7 @@
             // 처음 진입시, 기본 게시판 데이터 로드
             get_board_list(1);
 
-            $(".dropdown-item").on('click', function () {
+            $(".free_board_section .dropdown-item").on('click', function () {
                 window.current_category_name = this.dataset.category;
                 const dropdown_menu_button = document.querySelector('#dropdownMenuButton');
                 const text = this.innerHTML;
@@ -86,7 +85,7 @@
             });
         }
 
-        function row_click(){
+        function row_click() {
             const id = this.dataset.id;
             window.location.href = `free_board_detail_read.php?id=${id}`;
         }
@@ -154,10 +153,17 @@
                             id,
                             title,
                             views,
+                            type,
                             create_user,
+                            create_nick_name,
                             create_date
                         } = row;
                         const tr = document.createElement('tr');
+                        if(type === 'notice'){
+                            tr.style.backgroundColor = '#FFCC99';
+                            tr.style.fontWeight = 'bold'
+                            tr.style.color = 'black'
+                        }
 
                         const id_td = document.createElement('td');
                         const id_txt = document.createTextNode(id);
@@ -176,7 +182,7 @@
                         tr.appendChild(views_td);
 
                         const create_user_td = document.createElement('td');
-                        const create_user_txt = document.createTextNode(create_user);
+                        const create_user_txt = document.createTextNode(create_nick_name);
                         create_user_td.appendChild(create_user_txt);
                         tr.appendChild(create_user_td);
 
@@ -279,8 +285,8 @@
     <!-- gallery section start -->
     <div class="free_board_section layout_padding">
         <div class="container">
-            <div class="row">
-                <div class="col-sm-12">
+            <div class="row" style="padding-left: 15px;">
+                <div>
                     <h1 class="gallery_taital">자유 게시판</h1>
                 </div>
             </div>
@@ -334,7 +340,7 @@
                     </nav>
                 </div>
             </div>
-            <div class="seemore_bt"><a href="#">See More</a></div>
+            <!-- <div class="seemore_bt"><a href="#">See More</a></div> -->
         </div>
     </div>
     <!-- gallery section end -->

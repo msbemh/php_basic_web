@@ -22,10 +22,11 @@
 <link rel="stylesheet" href="/css/jquery.mCustomScrollbar.min.css">
 <!-- Tweaks for older IEs-->
 <link rel="stylesheet" href="https://netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.css">
-<!-- owl stylesheets --> 
+<!-- owl stylesheets -->
 <link rel="stylesheet" href="/css/owl.carousel.min.css">
 <link rel="stylesheet" href="/css/owl.theme.default.min.css">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css" media="screen">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/fancybox/2.1.5/jquery.fancybox.min.css"
+    media="screen">
 
 
 <link rel="stylesheet" href="/css/custom.css">
@@ -39,10 +40,10 @@
 <script src="/js/plugin.js"></script>
 <!-- sidebar -->
 <script src="/js/jquery.mCustomScrollbar.concat.min.js"></script>
-<script src="/js/custom.js"></script>     
+<script src="/js/custom.js"></script>
 
 <!-- 공통 js -->
-<script src="/js/common.js"></script>   
+<script src="/js/common.js"></script>
 
 <!-- suneditor 에디터 -->
 <link href="https://cdn.jsdelivr.net/npm/suneditor@latest/dist/css/suneditor.min.css" rel="stylesheet">
@@ -57,3 +58,43 @@
 <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 <script src="sweetalert2.all.min.js"></script>
 
+<!-- swiper css -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.css" />
+<!-- Swiper JS -->
+<script src="https://cdn.jsdelivr.net/npm/swiper@9/swiper-bundle.min.js"></script>
+
+<!-- React를 실행. -->
+<!-- 주의: 사이트를 배포할 때는 "development.js"를 "production.min.js"로 대체하세요. -->
+<script src="https://unpkg.com/react@18/umd/react.development.js" crossorigin></script>
+<script src="https://unpkg.com/react-dom@18/umd/react-dom.development.js" crossorigin></script>
+
+<script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
+
+<?php
+session_start();
+?>
+
+<script>
+    var session_email = `<?php
+    if (isset($_SESSION['email'])) {
+        echo $_SESSION['email'];
+    } else {
+        echo null;
+    }
+    ?>`;
+    var session_nick_name = `<?php
+    if (isset($_SESSION['nick_name'])) {
+        echo $_SESSION['nick_name'];
+    } else {
+        echo null;
+    }
+    ?>`;
+
+    var session_profile_img = `<?php
+    if (isset($_SESSION['profile_img'])) {
+        echo $_SESSION['profile_img'];
+    } else {
+        echo null;
+    }
+    ?>`;
+</script>

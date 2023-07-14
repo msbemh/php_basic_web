@@ -9,10 +9,15 @@ require('../db/db.php');
 
 try {
 
+    session_start();
+
+    $email = $_SESSION['email'];
+
     // POST 파라미터 가져오기
     $title = $_POST["title"];
     $content = $_POST["content"];
     $file_path_infos = $_POST["file_path_infos"];
+    $type = $_POST["type"];
 
     // 추가된 데이터의 id
     $insert_id;
@@ -21,11 +26,12 @@ try {
                     title, 
                     content, 
                     views, 
+                    type,
                     create_user, 
                     create_date, 
                     update_user, 
                     update_date)
-                VALUES ('$title', '$content', 0, 'admin', now(), 'admin', now())";
+                VALUES ('$title', '$content', 0, '$type', '$email', now(), '$email', now())";
 
     // free_board_tb 데이터 추가
     $result_array = array();
@@ -53,7 +59,7 @@ try {
                     create_date, 
                     update_user, 
                     update_date)
-                VALUES ('$insert_id', '$file_path', '$type', 'admin', now(), 'admin', now())";
+                VALUES ('$insert_id', '$file_path', '$type', '$email', now(), '$email', now())";
 
             // free_board_file_tb 데이터 추가
             if ($conn->query($sql) === TRUE) {

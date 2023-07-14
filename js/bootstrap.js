@@ -1,13 +1,14 @@
+var _typeof = typeof Symbol === "function" && typeof Symbol.iterator === "symbol" ? function (obj) { return typeof obj; } : function (obj) { return obj && typeof Symbol === "function" && obj.constructor === Symbol && obj !== Symbol.prototype ? "symbol" : typeof obj; };
+
 /*!
   * Bootstrap v4.1.0 (https://getbootstrap.com/)
   * Copyright 2011-2018 The Bootstrap Authors (https://github.com/twbs/bootstrap/graphs/contributors)
   * Licensed under MIT (https://github.com/twbs/bootstrap/blob/master/LICENSE)
   */
 (function (global, factory) {
-  typeof exports === 'object' && typeof module !== 'undefined' ? factory(exports, require('jquery'), require('popper.js')) :
-  typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) :
-  (factory((global.bootstrap = {}),global.jQuery,global.Popper));
-}(this, (function (exports,$,Popper) { 'use strict';
+  (typeof exports === 'undefined' ? 'undefined' : _typeof(exports)) === 'object' && typeof module !== 'undefined' ? factory(exports, require('jquery'), require('popper.js')) : typeof define === 'function' && define.amd ? define(['exports', 'jquery', 'popper.js'], factory) : factory(global.bootstrap = {}, global.jQuery, global.Popper);
+})(this, function (exports, $, Popper) {
+  'use strict';
 
   $ = $ && $.hasOwnProperty('default') ? $['default'] : $;
   Popper = Popper && Popper.hasOwnProperty('default') ? Popper['default'] : Popper;
@@ -127,7 +128,6 @@
      * Public Util Api
      * --------------------------------------------------------------------------
      */
-
 
     var Util = {
       TRANSITION_END: 'bsTransitionEnd',
@@ -355,7 +355,6 @@
      * ------------------------------------------------------------------------
      */
 
-
     $$$1(document).on(Event.CLICK_DATA_API, Selector.DISMISS, Alert._handleDismiss(new Alert()));
     /**
      * ------------------------------------------------------------------------
@@ -506,7 +505,6 @@
      * Data Api implementation
      * ------------------------------------------------------------------------
      */
-
 
     $$$1(document).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE_CARROT, function (event) {
       event.preventDefault();
@@ -937,7 +935,7 @@
 
           var _config = _objectSpread({}, Default, $$$1(this).data());
 
-          if (typeof config === 'object') {
+          if ((typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object') {
             _config = _objectSpread({}, _config, config);
           }
 
@@ -1012,7 +1010,6 @@
      * Data Api implementation
      * ------------------------------------------------------------------------
      */
-
 
     $$$1(document).on(Event.CLICK_DATA_API, Selector.DATA_SLIDE, Carousel._dataApiClickHandler);
     $$$1(window).on(Event.LOAD_DATA_API, function () {
@@ -1324,7 +1321,7 @@
           var $this = $$$1(this);
           var data = $this.data(DATA_KEY);
 
-          var _config = _objectSpread({}, Default, $this.data(), typeof config === 'object' && config);
+          var _config = _objectSpread({}, Default, $this.data(), (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config);
 
           if (!data && _config.toggle && /show|hide/.test(config)) {
             _config.toggle = false;
@@ -1364,7 +1361,6 @@
      * Data Api implementation
      * ------------------------------------------------------------------------
      */
-
 
     $$$1(document).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, function (event) {
       // preventDefault only for <a> elements (which change the URL) not inside the collapsible element
@@ -1676,10 +1672,9 @@
             },
             preventOverflow: {
               boundariesElement: this._config.boundary
-            }
-          } // Disable Popper.js if we have a static display
+            } // Disable Popper.js if we have a static display
 
-        };
+          } };
 
         if (this._config.display === 'static') {
           popperConfig.modifiers.applyStyle = {
@@ -1695,7 +1690,7 @@
         return this.each(function () {
           var data = $$$1(this).data(DATA_KEY);
 
-          var _config = typeof config === 'object' ? config : null;
+          var _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' ? config : null;
 
           if (!data) {
             data = new Dropdown(this, _config);
@@ -1854,7 +1849,6 @@
      * Data Api implementation
      * ------------------------------------------------------------------------
      */
-
 
     $$$1(document).on(Event.KEYDOWN_DATA_API, Selector.DATA_TOGGLE, Dropdown._dataApiKeydownHandler).on(Event.KEYDOWN_DATA_API, Selector.MENU, Dropdown._dataApiKeydownHandler).on(Event.CLICK_DATA_API + " " + Event.KEYUP_DATA_API, Dropdown._clearMenus).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, function (event) {
       event.preventDefault();
@@ -2371,7 +2365,7 @@
         return this.each(function () {
           var data = $$$1(this).data(DATA_KEY);
 
-          var _config = _objectSpread({}, Modal.Default, $$$1(this).data(), typeof config === 'object' && config);
+          var _config = _objectSpread({}, Modal.Default, $$$1(this).data(), (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config);
 
           if (!data) {
             data = new Modal(this, _config);
@@ -2409,7 +2403,6 @@
      * Data Api implementation
      * ------------------------------------------------------------------------
      */
-
 
     $$$1(document).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, function (event) {
       var _this10 = this;
@@ -2830,7 +2823,7 @@
       _proto.setElementContent = function setElementContent($element, content) {
         var html = this.config.html;
 
-        if (typeof content === 'object' && (content.nodeType || content.jquery)) {
+        if ((typeof content === 'undefined' ? 'undefined' : _typeof(content)) === 'object' && (content.nodeType || content.jquery)) {
           // Content is a DOM node or a jQuery
           if (html) {
             if (!$$$1(content).parent().is($element)) {
@@ -2894,7 +2887,7 @@
       };
 
       _proto._fixTitle = function _fixTitle() {
-        var titleType = typeof this.element.getAttribute('data-original-title');
+        var titleType = _typeof(this.element.getAttribute('data-original-title'));
 
         if (this.element.getAttribute('title') || titleType !== 'string') {
           this.element.setAttribute('data-original-title', this.element.getAttribute('title') || '');
@@ -3048,7 +3041,7 @@
         return this.each(function () {
           var data = $$$1(this).data(DATA_KEY);
 
-          var _config = typeof config === 'object' && config;
+          var _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config;
 
           if (!data && /dispose|hide/.test(config)) {
             return;
@@ -3113,7 +3106,6 @@
      * jQuery
      * ------------------------------------------------------------------------
      */
-
 
     $$$1.fn[NAME] = Tooltip._jQueryInterface;
     $$$1.fn[NAME].Constructor = Tooltip;
@@ -3244,7 +3236,7 @@
         return this.each(function () {
           var data = $$$1(this).data(DATA_KEY);
 
-          var _config = typeof config === 'object' ? config : null;
+          var _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' ? config : null;
 
           if (!data && /destroy|hide/.test(config)) {
             return;
@@ -3310,7 +3302,6 @@
      * jQuery
      * ------------------------------------------------------------------------
      */
-
 
     $$$1.fn[NAME] = Popover._jQueryInterface;
     $$$1.fn[NAME].Constructor = Popover;
@@ -3571,7 +3562,7 @@
         return this.each(function () {
           var data = $$$1(this).data(DATA_KEY);
 
-          var _config = typeof config === 'object' && config;
+          var _config = (typeof config === 'undefined' ? 'undefined' : _typeof(config)) === 'object' && config;
 
           if (!data) {
             data = new ScrollSpy(this, _config);
@@ -3607,7 +3598,6 @@
      * Data Api implementation
      * ------------------------------------------------------------------------
      */
-
 
     $$$1(window).on(Event.LOAD_DATA_API, function () {
       var scrollSpys = $$$1.makeArray($$$1(Selector.DATA_SPY));
@@ -3860,7 +3850,6 @@
      * ------------------------------------------------------------------------
      */
 
-
     $$$1(document).on(Event.CLICK_DATA_API, Selector.DATA_TOGGLE, function (event) {
       event.preventDefault();
 
@@ -3920,6 +3909,5 @@
   exports.Tooltip = Tooltip;
 
   Object.defineProperty(exports, '__esModule', { value: true });
-
-})));
+});
 //# sourceMappingURL=bootstrap.js.map

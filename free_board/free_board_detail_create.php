@@ -77,6 +77,14 @@
                 const title = document.querySelector('#title').value;
                 const content = editor.getContents();
                 const file_path_infos = [];
+                const is_notice = document.querySelector('#is_notice').checked;
+
+                let type = 'normal';
+                if(is_notice){
+                    type = 'notice';
+                }else{
+                    type = 'normal';
+                }
 
                 /**
                  * suneditor에 추가한 image file 경로 추가
@@ -108,7 +116,8 @@
                     data: {
                         title,
                         content,
-                        file_path_infos
+                        file_path_infos,
+                        type
                     },
                     dataType: 'json',
                     success: function (data) {
@@ -194,8 +203,12 @@
                     <button type="button" class="btn btn-dark" id="save_btn">저장</button>
                 </div>
             </div>
-            <hr>
-            <div class="board_detail_content" style="margin-bottom:10px;">
+            <div class="right">
+                <input type="checkbox" id="is_notice" name="type">
+                <label for="type">공지사항 여부</label>
+            </div>
+            <hr class="clear">
+            <div class="board_detail_content " style="margin-bottom:10px;">
                 <input class="plain_input" id="title" placeholder="제목을 입력하세요" />
             </div>
             <div>

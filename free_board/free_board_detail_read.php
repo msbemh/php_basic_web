@@ -167,7 +167,7 @@
                         </div>
                     </div>
                     <div class="button_container">
-                        <button type="button" class="btn btn-white" id="cancel_button">취소</button>
+                        <!-- <button type="button" class="btn btn-white" id="cancel_button">취소</button> -->
                         <button type="button" class="btn btn-dark" id="delete_button">삭제</button>
                         <button type="button" class="btn btn-dark" id="update_button">수정</button>
                     </div>

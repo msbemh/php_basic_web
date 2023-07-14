@@ -21,6 +21,7 @@
             ,title
             ,views
             ,content
+            ,type
             ,create_user
             ,create_date
             ,update_user

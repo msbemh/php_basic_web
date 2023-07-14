@@ -9,10 +9,14 @@ require('../db/db.php');
 
 try {
 
+    session_start();
+    $email = $_SESSION['email'];
+
     // POST 파라미터 가져오기
     $id = $_POST["id"];
     $title = $_POST["title"];
     $content = $_POST["content"];
+    $type = $_POST["type"];
     $file_path_infos = $_POST["file_path_infos"];
     // 이걸로 기존에 있던 path와 새롭게 들어온 path를 구별하여, 새롭게 들어온 path만 DB에 경로 추가해준다.
     $file_path_infos_copy = [];
@@ -23,7 +27,8 @@ try {
     $sql = "UPDATE free_board_tb SET 
                 title = '$title',
                 content = '$content',
-                update_user = 'admin',
+                type = '$type',
+                update_user = '$email',
                 update_date = now()
             WHERE id = $id";
 
@@ -102,14 +107,16 @@ try {
         foreach ($file_path_infos_copy as $file_info) {
             $file_path = $file_info['path'];
             $file_path = urldecode($file_path);
+            $file_type = $file_info['type'];
             $sql = "INSERT INTO free_board_file_tb(
                     free_board_id, 
                     path, 
+                    type,
                     create_user, 
                     create_date, 
                     update_user, 
                     update_date)
-                VALUES ('$id', '$file_path', 'admin', now(), 'admin', now())";
+                VALUES ('$id', '$file_path', '$file_type', '$email', now(), '$email', now())";
 
             // free_board_file_tb 데이터 추가
             if ($conn->query($sql) === TRUE) {

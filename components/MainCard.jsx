@@ -92,14 +92,17 @@ const MainCard = ({ card, children }) => {
                 {/* 바디 */}
                 <div className="card_body relative_box ">
                     <swiper-container
-                        style={{ height: '100%' }}
+                        style={{ height: '100%', width: '100%' }}
                         navigation="true"
                         pagination="true" >
                         {/* 컨텐츠 파일 리스트 */}
                         {card.file_list?.map(file => {
                             return (
-                                <swiper-slide key={file.path}>
-                                    <img src={file.path} />
+                                <swiper-slide 
+                                    key={file.path}>
+                                    <img 
+                                        src={file.path} 
+                                        style={{ height: '100%', width: '100%', objectFit: 'cover' }}/>
                                 </swiper-slide>
                             )
                         })}
@@ -114,7 +117,7 @@ const MainCard = ({ card, children }) => {
                     </div>
                     {/* 댓글 view로 이동 */}
                     <div onClick={onClickChat} className="heart_container pointer left margin_left_30">
-                        <img src="/images/free-icon-chat-bubble.png" className="chat_img" />
+                        <img src="/images/free-icon-chat-bubble.png" className="chat_img"  />
                     </div>
                 </div>
             </div>

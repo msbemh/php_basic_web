@@ -153,10 +153,17 @@
                             id,
                             title,
                             views,
+                            type,
                             create_user,
+                            create_nick_name,
                             create_date
                         } = row;
                         const tr = document.createElement('tr');
+                        if(type === 'notice'){
+                            tr.style.backgroundColor = '#FFCC99';
+                            tr.style.fontWeight = 'bold'
+                            tr.style.color = 'black'
+                        }
 
                         const id_td = document.createElement('td');
                         const id_txt = document.createTextNode(id);
@@ -175,7 +182,7 @@
                         tr.appendChild(views_td);
 
                         const create_user_td = document.createElement('td');
-                        const create_user_txt = document.createTextNode(create_user);
+                        const create_user_txt = document.createTextNode(create_nick_name);
                         create_user_td.appendChild(create_user_txt);
                         tr.appendChild(create_user_td);
 
@@ -275,6 +282,8 @@
 <body>
     <?php require '../header.php'; ?>
 
+    <div id="vue_app"></div>
+
     <!-- gallery section start -->
     <div class="free_board_section layout_padding">
         <div class="container">
@@ -337,6 +346,8 @@
         </div>
     </div>
     <!-- gallery section end -->
+
+    <script src="../dist/vue_bundle.js"></script>
 
     <?php require '../footer.php'; ?>
 

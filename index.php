@@ -566,13 +566,13 @@
    </div>
 
    <div  class="home_container">
-      <div class="home_container2" id="app">
+      <div class="home_container2" id="react_app">
       </div>
    </div>
 
    <!-- <div id="test" style="float:left;"></div> -->
 
-   <script src="dist/main.js"></script>
+   <script src="dist/react_bundle.js"></script>
 
    <!-- banner section start -->
    <?php require './footer.php'; ?>
